@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/ytmp4",
+      "dest": "/main.js"
+    },
+    {
+      "src": "/ytmp3",
+      "dest": "/main.js"
+    }
+  ]
+}
