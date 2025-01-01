@@ -1,5 +1,5 @@
-const axios = require('axios')
-const express = require('express')
+import express from "express";
+import axios from "axios";
 
 const app = express();
 
@@ -8,7 +8,7 @@ async function ytdl(link, qualityIndex, typeIndex) {
     audio: { 1: '32', 2: '64', 3: '128', 4: '192' },
     video: { 1: '144', 2: '240', 3: '360', 4: '480', 5: '720', 6: '1080', 7: '1440', 8: '2160' }
   };
-  
+
   const headers = {
     accept: '*/*',
     referer: 'https://ytshorts.savetube.me/',
@@ -110,6 +110,5 @@ app.get("/ytmp3", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`)
-})
+// Hapus app.listen, karena Vercel mengatur ini otomatis
+export default app;
