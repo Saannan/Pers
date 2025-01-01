@@ -1,5 +1,5 @@
-import express from "express";
-import axios from "axios";
+const axios = require('axios')
+const express = require('express')
 
 const app = express();
 
@@ -110,4 +110,6 @@ app.get("/ytmp3", async (req, res) => {
   }
 });
 
-export default app;
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`)
+})
