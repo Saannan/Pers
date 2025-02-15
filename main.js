@@ -51,7 +51,14 @@ async function Ytdl(url, type, qual = null) {
         cookie = yt_page.headers['set-cookie']?.join('; ') || ''
     }
 
-    const config = { requestOptions: { headers: { Cookie: cookie } } }
+    const config = { 
+        requestOptions: { 
+            headers: { 
+                'Cookie': cookie, 
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            } 
+        } 
+    }
     const info = await YTDL.getInfo(url, config)
     const video = info.videoDetails
     const file_id = await randomKarakter(8)
