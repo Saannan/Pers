@@ -1,12 +1,16 @@
 {
-  "name": "V-Tube Downloader",
+  "name": "V-Tube",
   "version": "1.0.0",
+  "description": "Simple YouTube API",
+  "main": "main.js",
   "scripts": {
-    "start": "vercel dev"
+    "start": "node main.js"
   },
   "dependencies": {
-    "axios": "^1.7.8",
-    "express": "^4.19.1"
-  },
-  "type": "module"
-    }
+    "@distube/ytdl-core": "^4.16.3",
+    "axios": "^1.7.9",
+    "child_process": "^1.0.2",
+    "express": "^4.19.1",
+    "fs": "0.0.1-security"
+  }
+}

@@ -8,11 +8,7 @@
   ],
   "routes": [
     {
-      "src": "/ytmp4",
-      "dest": "/main.js"
-    },
-    {
-      "src": "/ytmp3",
+      "src": "/api/(.*)",
       "dest": "/main.js"
     }
   ]
