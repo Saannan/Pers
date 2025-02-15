@@ -111,7 +111,7 @@ async function Ytdl(url, type, qual = null) {
         })
     }
 
-    const config = ytdl.createAgent(cookies)
+    const config = YTDL.createAgent(cookies)
     const info = await YTDL.getInfo(url, config)
     const video = info.videoDetails
     const file_id = await randomKarakter(8)
