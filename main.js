@@ -14,6 +14,76 @@ function Decode(type) {
 app.use('/files', express.static('temp'))
 app.listen(port, () => console.log(`Server jalan di http://localhost:${port}`))
 
+const cookies = [{
+        name: "__Secure-1PAPISID",
+        value: "H_2IeDUX5Z7CckgN/AE-X-OcSmHhUDs0f2"
+    },
+    {
+        name: "__Secure-1PSID",
+        value: "g.a000qQixZWIZIFjTzOH_1mkOhpxby4XPdp1Z2AiERhCTm_8LbiAOng1TbrfRHXBF9gx0ihKvQAACgYKAS0SARQSFQHGX2Mi19F2KdBiRrcbYU9Oraa0NxoVAUF8yKqP8KiuL8KThKHScKZ_o_Wc0076"
+    },
+    {
+        name: "__Secure-1PSIDCC",
+        value: "AKEyXzVuRKSIfoD1KtEdq9DlYatiYpQaXxDeSqNdFiYZZVoGpxo_5aIfPkr7ZyofOC_GPtjG6g"
+    },
+    {
+        name: "__Secure-1PSIDTS",
+        value: "sidts-CjEBQT4rXyk6eHqf1odJUs9PNgCgDZsI-1LVDp2Tl8sI6xpVEH5S_FLrCtg2W2vY9hCPEAA"
+    },
+    {
+        name: "__Secure-3PAPISID",
+        value: "H_2IeDUX5Z7CckgN/AE-X-OcSmHhUDs0f2"
+    },
+    {
+        name: "__Secure-3PSID",
+        value: "g.a000qQixZWIZIFjTzOH_1mkOhpxby4XPdp1Z2AiERhCTm_8LbiAOH_kNy13Vac_jN7WTZYmkcAACgYKAZQSARQSFQHGX2MiJz7IWUCR5lBxtCsHDuABrhoVAUF8yKrYYUMHoWMYV64lM84nlN3V0076"
+    },
+    {
+        name: "__Secure-3PSIDCC",
+        value: "AKEyXzW0PwihqH43gSbj3hqqSl2AKr78AmCSpACv3Kh2Zj8QyuIeCiJhZ8db-4AeQ_0lhi2r"
+    },
+    {
+        name: "__Secure-3PSIDTS",
+        value: "sidts-CjEBQT4rXyk6eHqf1odJUs9PNgCgDZsI-1LVDp2Tl8sI6xpVEH5S_FLrCtg2W2vY9hCPEAA"
+    },
+    {
+        name: "APISID",
+        value: "tsKIe0XwubcRP9oF/AbUexFDZ4zgoi7UgO"
+    },
+    {
+        name: "GPS",
+        value: "1"
+    },
+    {
+        name: "HSID",
+        value: "AUIqc7JihwALVx4Jf"
+    },
+    {
+        name: "LOGIN_INFO",
+        value: "AFmmF2swRQIgZ_mcqDjlI0gs-TGrhgUMogyb-NMilC2Ty6oE48l15C0CIQCvPQZgfct3lKtuSPZYqzZ3WNs7ESJg6On2rY18z3Cqzw:QUQ3MjNmeHdVNTY5Z2hFUmFocGh6el9OZy1MLVduWUd0SC1vZnZqbXhYTmpONXg4M2tKXzJFTjItcVM5VE1pYkhrVWhYdWFweEg1QjdlSUxYancwZ3lrX21OSFRZTExweVBMWHhIZXVTU0Q0V2h6WWhHbHE0RG5sQzhiQkV6b3ZQbm5XRURYVUFyeTgyWEN1NnNuQktETGF5WlBsSnFuMUtB"
+    },
+    {
+        name: "PREF",
+        value: "f6=40000000&tz=Asia.Jakarta"
+    },
+    {
+        name: "SAPISID",
+        value: "H_2IeDUX5Z7CckgN/AE-X-OcSmHhUDs0f2"
+    },
+    {
+        name: "SID",
+        value: "g.a000qQixZWIZIFjTzOH_1mkOhpxby4XPdp1Z2AiERhCTm_8LbiAO9-MYA1dwrovJFMWWurfPPgACgYKAdkSARQSFQHGX2MiG0yi4bMkCiQPzU_oCHCXrhoVAUF8yKo7a0pZgQV27X-vytv7Tx6o0076"
+    },
+    {
+        name: "SIDCC",
+        value: "AKEyXzVDtlNl59Z9UD9H1JJ_YcKBFlDFYmB5HOV8H1njsTtQ0Q42zkY9EaEzspgvU-SIc3NQ"
+    },
+    {
+        name: "SSID",
+        value: "ABmcpOGj-7pqse2dW"
+    }
+]
+
 const QualsVideo = ["144", "240", "360", "480", "720", "1080"]
 const QualsAudio = ["64", "128", "192", "256", "320"]
 
@@ -41,24 +111,7 @@ async function Ytdl(url, type, qual = null) {
         })
     }
 
-    let cookie
-    const match = cookie?.match(/Expires=([^;]+)/)
-    const date = match ? new Date(match[1]) : null
-    const now = new Date()
-
-    if (!cookie || (date && now > date)) {
-        const yt_page = await axios.get("https://www.youtube.com")
-        cookie = yt_page.headers['set-cookie']?.join('; ') || ''
-    }
-
-    const config = { 
-        requestOptions: { 
-            headers: { 
-                'Cookie': cookie, 
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            } 
-        } 
-    }
+    const config = ytdl.createAgent(cookies)
     const info = await YTDL.getInfo(url, config)
     const video = info.videoDetails
     const file_id = await randomKarakter(8)
